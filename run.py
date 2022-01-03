@@ -1,39 +1,35 @@
 import sys
-import traceback
 from datetime import datetime
 from importlib import import_module
 
 
-def run(func, filename="filename"):
-    try:
-        with open(filename) as f:
-            try:
-                print(func(f))
-            except:
-                traceback.print_exc()
-    except FileNotFoundError:
-        print()
+def parse(filename, parser=str, sep='\n', sample=0) -> tuple:
+    """Split the input file into entries separated with 'sep' and apply
+    'parse' to each"""
+    text = open(filename).read()
+    entries = mapt(parser, text.rstrip().split(sep))
+    return entries
 
-def run_day(day, improved):
-    if improved:
-        module = import_module(f"pyt.day{day:02}_improved")
-    else:
-        module = import_module(f"pyt.day{day:02}")
-    print(f"DAY {day}")
 
-    for i in ("p1", "p2"):
+def mapt(fn, *args) -> tuple:
+    """map(fn, *args) and return the results as a tuple."""
+    return tuple(map(fn, *args))
+
+
+def run(func, filename):
+    return func(parse(filename, str))
+
+
+def run_day(day):
+    module = import_module(f"pyt.day{day:02}")
+
+    for i in ('p1', 'p2'):
         if not hasattr(module, i):
             continue
-
-        
-        print(f"--- {i} ---")
-        print("sample: ", end="")
-        run(getattr(module, i), f"input/day{day:02}_sample.txt")
-        print("input:  ", end="")
-        run(getattr(module, i), f"input/day{day:02}.txt")
+        print(f"==== {i} ====")
+        print(run(getattr(module, i), f"input/day{day:02}.txt"))
 
 
 if __name__ == "__main__":
     day = int(sys.argv[1]) if len(sys.argv) >= 2 else datetime.now().day
-    improved = True if len(sys.argv) >= 3 and sys.argv[2] == "improved" else False
-    run_day(day, improved)
+    run_day(day)
