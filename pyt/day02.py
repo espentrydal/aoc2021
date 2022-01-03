@@ -1,8 +1,8 @@
-def p1(f):
+def p1(entries):
     x = z = 0                   # z is depth based
-    for line in f:
-        a, b = line.split()
-        b = int(b)
+    for entry in entries:
+        a = entry[0]
+        b = int(entry[1])
         if a == 'forward':
             x += b
         if a == 'down':
@@ -11,11 +11,12 @@ def p1(f):
             z -= b
     return x*z
 
-def p2(f):
+
+def p2(entries):
     aim = x = z = 0             # z is depth based
-    for line in f:
-        a, b = line.split()
-        b = int(b)
+    for entry in entries:
+        a = entry[0]
+        b = int(entry[1])
         if a == 'forward':
             x += b
             z += b*aim
