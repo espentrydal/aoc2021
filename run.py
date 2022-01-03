@@ -17,7 +17,7 @@ def mapt(fn, *args) -> tuple:
 
 
 def run(func, filename):
-    return func(parse(filename, str))
+    return parse(filename, str)  # func(parse(filename, str))
 
 
 def run_day(day):
