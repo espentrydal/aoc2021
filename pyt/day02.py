@@ -1,6 +1,7 @@
 def p1(entries):
     x = z = 0                   # z is depth based
     for entry in entries:
+        entry = entry.split()
         a = entry[0]
         b = int(entry[1])
         if a == 'forward':
@@ -15,6 +16,7 @@ def p1(entries):
 def p2(entries):
     aim = x = z = 0             # z is depth based
     for entry in entries:
+        entry = entry.split()
         a = entry[0]
         b = int(entry[1])
         if a == 'forward':
