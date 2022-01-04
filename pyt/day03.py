@@ -1,12 +1,9 @@
-import struct
+import array
 
+
+input_type = int
 
 def p1(f):
-    for line in f:
-        message = struct.unpack('iii', bytearray(int(line)))
-        c = -1
-        while message:
-            message &= message-1
-            c += 1
-        print(c)
-    return 0
+    for entry in entries:
+        
+    return
