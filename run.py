@@ -3,9 +3,12 @@ from datetime import datetime
 from importlib import import_module
 
 
-def parse(filename, parser=str, sep='\n', sample=0) -> tuple:
+def parse(filename, module, parser=str, sep='\n', sample=0) -> tuple:
     """Split the input file into entries separated with 'sep' and apply
-    'parse' to each"""
+    'parse' to each. Parse can be defined by input_type in the problem
+    solving module"""
+    if hasattr(module, 'input_type'):
+        parser = getattr(module, 'input_type')
     text = open(filename).read()
     entries = mapt(parser, text.rstrip().split(sep))
     return entries
@@ -16,8 +19,8 @@ def mapt(fn, *args) -> tuple:
     return tuple(map(fn, *args))
 
 
-def run(func, filename):
-    return func(parse(filename, str))
+def run(func, filename, module):
+    return func(parse(filename, module))
 
 
 def run_day(day):
@@ -27,7 +30,7 @@ def run_day(day):
         if not hasattr(module, i):
             continue
         print(f"==== {i} ====")
-        print(run(getattr(module, i), f"input/day{day:02}.txt"))
+        print(run(getattr(module, i), f"input/day{day:02}.txt", module))
 
 
 if __name__ == "__main__":

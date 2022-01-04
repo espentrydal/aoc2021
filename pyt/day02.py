@@ -1,3 +1,5 @@
+input_type = str
+
 def p1(entries):
     x = z = 0                   # z is depth based
     for entry in entries:
